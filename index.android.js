@@ -6,47 +6,98 @@
 import React, {
   AppRegistry,
   Component,
+  Image,
+  ListView,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
-class AwesomeProject extends Component {
+const mockMovies = [
+  {
+    title: 'Title',
+    year: '2015',
+    posters: {
+      thumbnail: 'http://i.imgur.com/UePbdph.jpg'
+    }
+  }
+];
+
+const reqUrl = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+
+class MovieProject extends Component {
+
+  state = { movies: null };
+
+  componentDidMount(){
+    this.fetchData();
+  }
+
   render() {
+    //const m = mockMovies[0];
+
+    return this.state.movies ?
+      this.renderMovie(this.state.movies[0]) :
+      this.renderLoading();
+  }
+
+  renderMovie(m) {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-        Hello world!!! Can you hear me?
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or
-            press menu button for dev menu
+        <Image
+          source={{uri: m.posters.thumbnail}}
+          style={styles.thumbnail}
+        />
+        <View style={styles.rightContainer}>
+          <Text style={styles.title}>{m.title}</Text>
+          <Text style={styles.year}>{m.year}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  renderLoading(){
+    return (
+      <View style={styles.container}>
+        <Text>
+          Loading movies...
         </Text>
       </View>
     );
   }
+
+  fetchData(){
+    fetch(reqUrl)
+      .then(res => res.json())
+      .then(data => this.setState({movies: data.movies}))
+      .done();
+  }
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
-  welcome: {
-    fontSize: 35,
-    textAlign: 'center',
-    margin: 10,
+  thumbnail: {
+    width: 53,
+    height: 81
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  rightContainer: {
+    flex: 1
   },
+  title: {
+    fontSize: 20,
+    marginBottom: 8,
+    textAlign: 'center'
+  },
+  year: {
+    textAlign: 'center'
+  }
 });
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('MovieProject', () => MovieProject);
