@@ -13,35 +13,28 @@ import React, {
   View
 } from 'react-native';
 
-const mockMovies = [
-  {
-    title: 'Title',
-    year: '2015',
-    posters: {
-      thumbnail: 'http://i.imgur.com/UePbdph.jpg'
-    }
-  }
-];
-
 const reqUrl = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 
 class MovieProject extends Component {
 
-  state = { movies: null };
+  state = {
+    dataSource: new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    }),
+    loaded: false
+  };
 
   componentDidMount(){
     this.fetchData();
   }
 
   render() {
-    //const m = mockMovies[0];
-
-    return this.state.movies ?
-      this.renderMovie(this.state.movies[0]) :
+    return this.state.loaded ?
+      this.renderMovies() :
       this.renderLoading();
   }
 
-  renderMovie(m) {
+renderMovie(m) {
     return (
       <View style={styles.container}>
         <Image
@@ -53,6 +46,16 @@ class MovieProject extends Component {
           <Text style={styles.year}>{m.year}</Text>
         </View>
       </View>
+    );
+  }
+
+  renderMovies() {
+    return (
+      <ListView
+        style={styles.listView}
+        renderRow={this.renderMovie}
+        dataSource={this.state.dataSource}
+      />
     );
   }
 
@@ -69,7 +72,10 @@ class MovieProject extends Component {
   fetchData(){
     fetch(reqUrl)
       .then(res => res.json())
-      .then(data => this.setState({movies: data.movies}))
+      .then(data => this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(data.movies),
+        loaded: true
+      }))
       .done();
   }
 }
@@ -97,6 +103,10 @@ const styles = StyleSheet.create({
   },
   year: {
     textAlign: 'center'
+  },
+  listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF'
   }
 });
 
