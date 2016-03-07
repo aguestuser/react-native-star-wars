@@ -43,11 +43,9 @@ class App extends Component {
     return(
       <View style={styles.container}>
         <Header/>
-        {
-          !this.state.loaded ?
+        { !this.state.loaded ?
             <Loading/>:
-            <Team people={this.state.people} />
-        }
+            <Team people={this.state.people} /> }
       </View>
     );
   }
