@@ -1,4 +1,4 @@
-const apiUrl = 'http://swapi.co/api';
+export const apiUrl = 'http://swapi.co/api';
 
 export const getMovies = () =>
   fetch(apiUrl)

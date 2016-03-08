@@ -7,7 +7,9 @@ import React, {
 } from 'react-native';
 
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import Team from '../components/Team';
+import { fetchPeople } from '../actions/People';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,11 +18,17 @@ const styles = StyleSheet.create({
 });
 
 class Root extends Component {
+
+  componentDidMount(){
+    this.props.dispatch(fetchPeople())
+  }
+
   render() {
+    const { isFetching } = this.props.people;
     return(
       <View style={styles.container}>
         <Header/>
-        <Team people={this.props.people} />
+        { isFetching ? <Loading/> : <Team {...this.props} /> }
       </View>
     );
   }
