@@ -3,9 +3,6 @@ import { assign } from 'lodash';
 
 import { REQUEST_PEOPLE, RECEIVE_PEOPLE } from '../actions/People';
 
-//import { peopleResponse } from '../../test/support/sampleData';
-//const { results: fakePeople } = peopleResponse;
-
 export const initialState = {
   isFetching: false,
   show: 10,

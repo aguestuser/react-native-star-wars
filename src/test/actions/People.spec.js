@@ -33,7 +33,7 @@ describe('People actions', () => {
         payload: { people: ppl }
       });
     });
-  })
+  });
 
   describe('fetchPeople', () => {
 
