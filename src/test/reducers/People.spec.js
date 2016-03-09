@@ -1,7 +1,10 @@
 import chai from 'chai'
 chai.should();
 
+import { peopleResponse } from '../support/sampleData';
+const { results: ppl } = peopleResponse;
 import { initialState } from '../../main/reducers/People';
+
 import * as a from '../../main/actions/People'
 import * as r from '../../main/reducers/People'
 

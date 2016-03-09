@@ -4,11 +4,11 @@ chai.should();
 import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-const { results: ppl } = peopleResponse;
+const mockStore = configureMockStore(middlewares);
 const middlewares = [ thunk ];
 
 import { peopleResponse } from '../support/sampleData';
-const mockStore = configureMockStore(middlewares);
+const { results: ppl } = peopleResponse;
 import { initialState } from '../../main/reducers/People';
 
 import * as actions from '../../main/actions/People'
