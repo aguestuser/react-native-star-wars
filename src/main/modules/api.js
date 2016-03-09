@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const apiUrl = 'http://swapi.co/api';
 
 export const getMovies = () =>

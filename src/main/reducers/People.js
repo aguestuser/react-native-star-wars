@@ -6,7 +6,7 @@ import { REQUEST_PEOPLE, RECEIVE_PEOPLE } from '../actions/People';
 //import { peopleResponse } from '../../test/support/sampleData';
 //const { results: fakePeople } = peopleResponse;
 
-const initialState = {
+export const initialState = {
   isFetching: false,
   show: 10,
   people: []
